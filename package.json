@@ -1,0 +1,38 @@
+{
+  "name": "suh-dgeni-ngdocs",
+  "version": "0.1.0",
+  "description": "A package to generate ng-docs similar to what is used on AngularJS website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "keywords": [
+    "ngdocs",
+    "angularjs",
+    "dgeni",
+    "dgeni-ngdocs",
+    "generate"
+  ],
+  "author": "Suhail Abood <suhail.abood@gmail.com> (suhailabood.me)",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.4.1",
+    "canonical-path": "0.0.2",
+    "dgeni": "^0.4.1",
+    "dgeni-packages": "^0.10.13",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-jshint": "^1.10.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
+    "lodash": "^3.9.1",
+    "node-html-encoder": "0.0.2",
+    "semver": "^4.3.4",
+    "shelljs": "^0.5.0",
+    "stringmap": "^0.2.2",
+    "underscore": "^1.8.3"
+  }
+}
