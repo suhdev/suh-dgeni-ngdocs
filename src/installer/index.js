@@ -4,27 +4,56 @@ var bower = require('bower'),
 	util = require('../util'),
 	cssmin = require('gulp-cssmin'),
 	_ = require('lodash'),
+	rename = require('gulp-rename'),
+	insert = require('gulp-insert'),
 	path = require('canonical-path'),
-	concat = require('gulp-concat'),
+	concat = require('gulp-concat-util'),
 	uglify = require('gulp-uglify');
 
 
 var Installer = function(conf){
 	var c = ['jquery','angular','angular-animate',
 			'angular-resource','angular-touch','angular-cookies',
-			'angular-sanitize','angular-bootstrap','bootstrap',
-			'google-code-prettify','lunr.js','marked'];
+			'angular-route','angular-sanitize','angular-aria',
+			'bootstrap',
+			'open-sans-fontface','google-code-prettify',
+			'font-awesome',
+			'lunr.js','marked'];
 	this.config = {
-		outputFolder:'./documentation',
-		cssFolder:'./documentation/css',
-		jsFolder:'./documentation/js',
-		fontsFolder:'./documentation/fonts'
+		outputFolder:conf.outputFolder,
+		cssFolder:path.join(conf.outputFolder,'css'),
+		jsFolder:path.join(conf.outputFolder,'js'),
+		fontsFolder:path.join(conf.outputFolder,'fonts'),
+		imagesFolder:path.join(conf.outputFolder,'images'),
+		localFolder:path.resolve(__dirname,'../../client')
 	};
 	this.config.packages = (conf && conf.packages)? [].concat(conf.packages,c):c;
 };
 
 Installer.prototype = {
 	install:function(callback){
+		console.log('Copying stylesheets ');
+		gulp.src(path.join(this.config.localFolder,'css/*.css'))
+			.pipe(gulp.dest(this.config.cssFolder));
+		console.log('Copying scripts');
+		gulp.src(path.join(this.config.localFolder,'js/*.js'))
+			.pipe(concat('docs.min.js'))
+			.pipe(gulp.dest(this.config.jsFolder));
+		gulp.src([path.join(this.config.localFolder,'js/crafty/*.js'),
+			path.join(this.config.localFolder,'js/crafty/**/*.js')])
+			.pipe(concat('crafty.min.js'))
+			.pipe(uglify())
+			.pipe(gulp.dest(this.config.jsFolder));
+			// .pipe(gulp.dest(this.config.outputFolder))
+		// console.log('Copying root files');
+		// gulp.src(path.join(this.config.localFolder,'base/*.*'),{
+		// 		dot:true
+		// 	})
+		// 	.pipe(gulp.dest(this.config.outputFolder));
+		gulp.src(path.join(this.config.localFolder,'images/*.*'))
+			.pipe(gulp.dest(this.config.imagesFolder));
+		gulp.src(path.join(this.config.localFolder,'fonts/*.'))
+		  	.pipe(gulp.dest(this.config.fontsFolder));
 		bower.commands.install(this.config.packages,{save:true})
 			.on('end',util.proxy(this.onPackagesInstalled,this,callback));
 	},
@@ -38,12 +67,12 @@ Installer.prototype = {
 		this.list((callback && callback.list)?callback.list:undefined);
 	},
 	list:function(callback){
-		console.log('Retreiving details of bower packages.')
+		console.log('Retreiving details of bower packages.');
 		bower.commands.list.line(['node','bower','list','--json'])
 			.on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
 	onPackagesListed:function(){
-		var e,f,files,js,css,fonts,p,dps = [], dpsKeys = ['jquery'];
+		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
 		e = (arguments.length == 2)?arguments[1]:arguments[0];
 		f = (arguments.length == 2)?arguments[0]:undefined;
 		p = _(e.dependencies)
@@ -100,9 +129,31 @@ Installer.prototype = {
 			.value();
 		fonts = _(files)
 			.filter(function(file){
-				return /(\.eot|\.svg|\.ttf|\.woff|\.woff)$/.test(file);
+				return /(\.eot|\.svg|\.ttf|\.woff|\.woff)$/.test(file) || 
+				/(fonts\/\*)$|(fonts\/.*$)/.test(file) || 
+				/(font\/\*)$|(font\/.*$)/.test(file);
 			})
 			.value();
+		// fff = _(fonts)
+		// 	.map(function(j){
+		// 		var k = {
+		// 			full:j,
+		// 		};
+		// 		var e = path.dirname(j)+'/';
+		// 		if (/\/css\/font\//.test(e)){
+		// 			k.path = '/css/font/'+e.split(/\/css\/font\//)[1];
+		// 		}else if (/\/css\/fonts\//.test(e)){
+		// 			k.path = '/css/font/'+e.split(/\/css\/fonts\//)[1];
+		// 		}else if (/\/font\//.test(e)){
+		// 			k.path = '/font/'+e.split(/\/font\//)[1];
+		// 		}else if (/\/fonts\//.test(e)){
+		// 			k.path = '/fonts/'+e.split(/\/fonts\//)[1];
+		// 		}else{
+		// 			k.path = '/';
+		// 		}
+		// 		return k;
+		// 	})
+		// 	.value();
 		this.files = {
 			css:css,
 			js:js,
@@ -110,15 +161,27 @@ Installer.prototype = {
 		};
 
 		gulp.src(this.files.css)
-			.pipe(concat('lib.min.css'))
+			.pipe(insert.append('\n'))
 			.pipe(cssmin())
+			.pipe(rename({
+				extname: '.min.css'
+			}))
 			.pipe(gulp.dest(this.config.cssFolder));
 		gulp.src(this.files.js)
-			.pipe(concat('lib.min.js'))
 			.pipe(uglify())
+			.pipe(rename({
+				extname: '.min.js'
+		   	}))
 			.pipe(gulp.dest(this.config.jsFolder));
+var self = this;
+		// _.forEach(fff,function(e){
+		// 	gulp.src(e.full)
+		// 		.pipe(gulp.dest(self.config.outputFolder+e.path));
+		// });
 		gulp.src(this.files.fonts)
-			.pipe(gulp.dest(this.config.fontsFolder));
+			.pipe(gulp.dest(this.config.fontsFolder))
+			.pipe(gulp.dest(this.config.cssFolder+'/fonts'))
+			.pipe(gulp.dest(this.config.outputFolder+'/font'));
 
 		if (f){
 			f();

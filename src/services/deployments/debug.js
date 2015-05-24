@@ -3,6 +3,9 @@
 module.exports = function debugDeployment(getVersion) {
   return {
     name: 'debug',
+     meta:{
+      description:'Suhail'
+    },
     examples: {
       commonFiles: {
         scripts: [ '../../../angular.js' ]

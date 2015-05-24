@@ -1,0 +1,24 @@
+{% extends "defaultpage.template.html" %}
+{% block header %}
+    <h1>{$ doc.homePage.title $}</h1>
+{% endblock %}
+{% block content %}
+	  <p>
+	  	{% for dep in doc.homePage.dependencies %}
+	  	<span class="label label-success">{$ dep.name $} : {$ dep.version $}</span>
+	  	{% endfor %}
+	  </p>
+	  <p>
+	    {$ doc.homePage.description $}
+	  </p>
+	  <p>
+	  	<h2>Usage</h2>
+	  	{$ doc.homePage.usage $}
+	  	{% marked %}
+	  	```javascript
+	  		var x = 123;
+	  	```
+	  	{% endmarked %}
+	  </p>
+
+{% endblock %}

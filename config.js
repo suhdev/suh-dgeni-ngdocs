@@ -1,10 +1,14 @@
 var path = require('canonical-path');
 var packagePath = __dirname;
+var _ = require('lodash');
+var Installer = require('./src/installer').Installer;
 var Package = require('dgeni').Package;
 
 // Create and export a new Dgeni package called dgeni-example. This package depends upon
 // the jsdoc and nunjucks packages defined in the dgeni-packages npm module.
 module.exports = function(conf){
+  var installer = new Installer(conf);
+  
   return new Package('suh-docs', [
     require('dgeni-packages/ngdoc'),
     require('dgeni-packages/nunjucks')
@@ -16,35 +20,36 @@ module.exports = function(conf){
   .factory(require('./src/services/gitData'))
 
   .factory(require('./src/services/deployments/debug'))
-  .factory(require('./src/services/deployments/default'))
+  .factory(require('./src/services/deployments/default')(conf))
   .factory(require('./src/services/deployments/jquery'))
   .factory(require('./src/services/deployments/production'))
 
   .factory(require('./src/inline-tag-defs/type'))
 
-
+  //.processor(require('./src/processors/module-docs')(conf))
   .processor(require('./src/processors/error-docs'))
   .processor(require('./src/processors/index-page'))
   .processor(require('./src/processors/keywords'))
-  .processor(require('./src/processors/pages-data'))
+  .processor(require('./src/processors/pages-data')(conf))
   .processor(require('./src/processors/versions-data'))
+  .processor(require('./src/processors/home-page')(conf))
 
 
   .config(function(dgeni, log, readFilesProcessor, writeFilesProcessor) {
-
-    dgeni.stopOnValidationError = true;
+    installer.install();
+    dgeni.stopOnValidationError = (conf.debug && conf.debug.stopOnValidationError) || true;
     dgeni.stopOnProcessingError = true;
 
-    log.level = 'info';
+    log.level = (conf.logger && conf.logger.level)?conf.logger.level:'info';
 
-    readFilesProcessor.basePath = conf.basePath; //path.resolve(__dirname,'./');
+    readFilesProcessor.basePath = conf.basePath; 
     readFilesProcessor.sourceFiles = conf.sourceFiles; 
     // readFilesProcessor.sourceFiles = [
     //   { include: 'src/**/*.js', basePath: 'src' },
     //   { include: 'docs/content/**/*.ngdoc', basePath: 'docs/content' }
     // ];
 
-    writeFilesProcessor.outputFolder = conf.outputFolder;//'build/docs';
+    writeFilesProcessor.outputFolder = conf.outputFolder;
 
   })
 
@@ -52,17 +57,36 @@ module.exports = function(conf){
   .config(function(parseTagsProcessor) {
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/tutorial-step'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/sortOrder'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/lib'));
+    if (conf.tagDefinitions){
+      _(conf.tagDefinitions).forEach(function(tag){
+        parseTagsProcessor.tagDefinitions.push(require(tag));
+      });
+    }
   })
 
 
   .config(function(inlineTagProcessor, typeInlineTagDef) {
     inlineTagProcessor.inlineTagDefinitions.push(typeInlineTagDef);
+    if (conf.inlineTagDefinitions){
+      _(conf.inlineTagDefinitions).forEach(function(tag){
+        inlineTagProcessor.inlineTagDefinitions.push(require(tag));
+      });
+    }
   })
 
 
   .config(function(templateFinder, renderDocsProcessor, gitData) {
     templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates'));
+    if (conf.templates){
+      _(conf.templates)
+        .forEach(function(template){
+          templateFinder.templateFolders.unshift(template);
+        });
+    }
     renderDocsProcessor.extraData.git = gitData;
+    renderDocsProcessor.extraData.payload = conf.extraData || {};
+    // renderDocsProcessor
   })
 
 

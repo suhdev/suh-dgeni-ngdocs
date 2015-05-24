@@ -1,9 +1,16 @@
 var Pack = require('./config'),
-	bower = require('bower');
+	Dgeni = require('dgeni'),
+	Installer = require('./src/installer');
 
 
 module.exports = {
-	init:function(dir){
-		bower.commands.install(['jquery'])
+	DocPackage:Pack,
+	generate:function(conf){
+		try{
+			var dgeni = new Dgeni([Pack(conf)]); 
+			return dgeni.generate();
+		}catch(err){
+			console.log(err);
+		}
 	}
 };

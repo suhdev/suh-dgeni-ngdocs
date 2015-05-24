@@ -1,0 +1,45 @@
+html, body {
+  position:relative;
+  height:100%;
+  font-family:'Open Sans',sans-serif;
+}
+
+h1{
+  font-size:3rem;
+  font-weight:500;
+}
+
+.api-profile-header-heading{
+  margin:1.2rem 0rem;
+  /*color:teal;*/
+}
+
+.naked-list,.naked-list ul
+ul.naked-list, ul.naked-list ul,
+ol.naked-list, ol.naked-list ul{
+  list-style: none;
+  padding:0px;
+  margin:0px;
+}
+
+.naked-list li,
+ul.naked-list li,
+ol.naked-list li{
+  padding-left:1.5rem;
+}
+
+.api-profile-description{
+  padding:2rem 0rem;
+}
+
+table.definition-table{
+  width:100%;
+}
+  .definition-table th{
+    padding:5px 0px;
+  }
+
+  .definition-table td{
+    padding:5px 0px;
+    font-weight:300;
+  }

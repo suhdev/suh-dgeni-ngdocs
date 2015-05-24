@@ -1,10 +1,14 @@
 {
   "name": "suh-dgeni-ngdocs",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "A package to generate ng-docs similar to what is used on AngularJS website.",
   "main": "index.js",
   "scripts": {
     "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suhdev/suh-dgeni-ngdocs.git"
   },
   "keywords": [
     "ngdocs",
@@ -20,9 +24,12 @@
     "canonical-path": "0.0.2",
     "dgeni": "^0.4.1",
     "dgeni-packages": "^0.10.13",
+    "git-data-extractor": "^1.0.0",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
+    "gulp-concat-util": "^0.5.2",
     "gulp-cssmin": "^0.1.7",
+    "gulp-insert": "^0.4.0",
     "gulp-jshint": "^1.10.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",

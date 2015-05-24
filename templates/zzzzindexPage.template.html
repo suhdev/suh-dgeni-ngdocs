@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" ng-app="Crafty" ng-strict-di ng-controller="DocumentationCtrl as documentCtrl">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="Description"
+        content="{$ doc.meta.description $}">
+  <meta name="fragment" content="!">
+  <style>
+  .nothing,.nothing:visited,.nothing:active,.nothing:hover{
+    color:initial;
+    text-transform:none;
+    text-decoration:none;
+  }
+  </style>
+  <title ng-bind-template="{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}: {{ currentArea.name }}: {{ currentPage.name || 'Error: Page not found'}}">{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}</title>
+
+  <script type="text/javascript">
+    // dynamically add base tag as well as css and javascript files.
+    // we can't add css/js the usual way, because some browsers (FF) eagerly prefetch resources
+    // before the base attribute is added, causing 404 and terribly slow loading of the docs app.
+    (function() {
+      var indexFile = (location.pathname.match(/\/(index[^\.]*\.html)/) || ['', ''])[1],
+          rUrl = /(#!\/|api|guide|misc|tutorial|error|index[^\.]*\.html).*$/,
+          baseUrl = location.href.replace(rUrl, indexFile),
+          production = location.hostname === 'docs.angularjs.org',
+          headEl = document.getElementsByTagName('head')[0],
+          sync = true;
+
+      addTag('base', {href: baseUrl});
+
+
+      {% for stylesheet in doc.stylesheets %}addTag('link', {rel: 'stylesheet', href: '{$ stylesheet $}', type: 'text/css'});
+      {% endfor %}
+
+      {% for script in doc.scripts %}addTag('script', {src: '{$ script $}' }, sync);
+      {% endfor %}
+
+      function addTag(name, attributes, sync) {
+        var el = document.createElement(name),
+            attrName;
+
+        for (attrName in attributes) {
+          el.setAttribute(attrName, attributes[attrName]);
+        }
+
+        sync ? document.write(outerHTML(el)) : headEl.appendChild(el);
+      }
+
+      function outerHTML(node){
+        // if IE, Chrome take the internal method otherwise build one
+        return node.outerHTML || (
+            function(n){
+                var div = document.createElement('div'), h;
+                div.appendChild(n);
+                h = div.innerHTML;
+                div = null;
+                return h;
+            })(node);
+      }
+    })();
+
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="uk-navbar">
+      <div class="">
+        <ul class="uk-navbar-nav">
+          {% if doc.logo %}
+          <li>
+            <a class="brand navbar-brand {$ doc.logo.classes $}" href="{$ doc.appUrl $}" style="{$ doc.logo.styles $}">
+              <img style="{$ doc.logo.imgStyles $}" class="logo" ng-src="{$ doc.logo.imgSrc if doc.logo.imgSrc else 'images/suh-dgeni-logo.png' $}">
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a class="brand navbar-brand" href="{$ doc.appUrl $}" style="text-align:center;border-radius:15px;padding:0px;">
+              <img style="height:90%;margin-top:5%;max-height:initial !important;padding:0px 10px;" class="logo" ng-src="{$ doc.logoUrl if (doc.logoUrl) else 'images/suh-dgeni-logo.png' $}">
+            </a>
+          </li>
+          {% endif %}
+          
+          {% for navItem in doc.navigation.top.navItems %}
+            {% if navItem.type == 'divider' %}
+            <li class="divider"></li>
+            {% elif navItem.type == 'dropdown' %}
+            <li class="uk-parent" data-uk-dropdown="" aria-haspopup="true" aria-expanded="false">
+              <a href="{$ navItem.url $}">{$ navItem.label $}</a>
+              <div class="uk-dropdown uk-dropdown-navbar">
+                  <ul class="uk-nav uk-nav-navbar">
+                    {% for item in navItem.menu %}
+                      <li><a href="{$ item.url $}">{$ item.label $}</a></li>
+                    {% endfor %}
+                  </ul>
+              </div>
+            </li>
+            {% else %}
+            <li class="uk-hidden-small" ng-class="{'active':documentCtrl.isActive('{$ navItem.url $}"><a href="{$ navItem.url $}">{$ navItem.label $}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <div class="uk-navbar-content uk-hidden-small">
+            <form class="uk-form uk-margin-remove uk-display-inline-block">
+                <input type="text" placeholder="Search">
+                <button class="uk-button uk-button-primary">Search</button>
+            </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="uk-grid">
+    <div class="uk-width-9-10 uk-container-center">
+      <div class="uk-panel uk-panel-box uk-panel-box-primary" style="margin:15px 0px;">
+        <ul class="uk-breadcrumb" ng-controller="BreadcrumbCtrl as breadcrumbCtrl">
+          <li ng-repeat="item in breadcrumbCtrl.items">
+            <a ng-href="{{item.url}}" ng-bind="item.label"></a>
+          </li>
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+  <div class="uk-grid">
+    <div class="uk-width-1-4">
+
+      <div class="uk-panel uk-panel-box">
+
+          <h3 class="uk-panel-title">Nav side in panel</h3>
+
+          <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="">
+              <li class="uk-active"><a href="#">Active</a></li>
+
+              <li class="uk-parent" aria-expanded="false">
+                  <a href="#">Parent</a>
+                  <div style="overflow:hidden;height:0;position:relative;"><ul class="uk-nav-sub">
+                      <li><a href="#">Sub item</a></li>
+                      <li><a href="#">Sub item</a>
+                          <ul>
+                              <li><a href="#">Sub item</a></li>
+                              <li><a href="#">Sub item</a></li>
+                          </ul>
+                      </li>
+                  </ul></div>
+              </li>
+
+              <li class="uk-parent" aria-expanded="false">
+                  <a href="#">Parent</a>
+                  <div style="overflow:hidden;height:0;position:relative;"><ul class="uk-nav-sub">
+                      <li><a href="#">Sub item</a></li>
+                      <li><a href="#">Sub item</a></li>
+                  </ul></div>
+              </li>
+
+              <li><a href="#">Item</a></li>
+
+              <li class="uk-nav-header">Header</li>
+              <li class="uk-parent"><a href="#"><i class="uk-icon-star"></i> Parent</a></li>
+              <li><a href="#"><i class="uk-icon-twitter"></i> Item</a></li>
+              <li class="uk-nav-divider"></li>
+              <li><a href="#"><i class="uk-icon-rss"></i> Item</a></li>
+          </ul>
+
+      </div>
+
+    </div>
+    <div class="uk-width-3-4">
+      
+    </div>
+  </div>
+  
+      <div class="row">
+        <div class="col-sm-3">
+          <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+            <li class="active"><a href="javascript:void(0)">Home</a></li>
+            <li><a href="javascript:void(0)">Profile</a></li>
+            <li class="disabled"><a href="javascript:void(0)">Disabled</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="bootstrap-elements.html" data-target="#">
+                    Dropdown <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:void(0)">Action</a></li>
+                    <li><a href="javascript:void(0)">Another action</a></li>
+                    <li><a href="javascript:void(0)">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:void(0)">Separated link</a></li>
+                </ul>
+            </li>
+        </ul>
+        </div>
+        <div class="col-sm-9">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <div ng-include="documentCtrl.file">
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</body>
+</html>

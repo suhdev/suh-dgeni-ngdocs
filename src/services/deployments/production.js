@@ -6,6 +6,9 @@ var cdnUrl = "//ajax.googleapis.com/ajax/libs/angularjs/1.0";
 module.exports = function productionDeployment(getVersion) {
   return {
     name: 'production',
+     meta:{
+      description:'Suhail'
+    },
     examples: {
       commonFiles: {
         scripts: [ cdnUrl + '/angular.min.js' ]

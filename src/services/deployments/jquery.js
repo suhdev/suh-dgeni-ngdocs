@@ -3,6 +3,9 @@
 module.exports = function jqueryDeployment(getVersion) {
   return {
     name: 'jquery',
+     meta:{
+      description:'Suhail'
+    },
     examples: {
       commonFiles: {
         scripts: [

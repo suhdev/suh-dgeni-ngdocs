@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteCond {REQUEST_FILENAME} !-f
+RewriteRule ^api(.*) /generated/index.html [L]
+RewriteCond {REQUEST_FILENAME} !-f 
+RewriteRule ^guide(.*) /generated/index.html [L]
+RewriteCond {REQUEST_FILENAME} !-f 
+RewriteRule ^suhail(.*) /generated/index.html [L]
