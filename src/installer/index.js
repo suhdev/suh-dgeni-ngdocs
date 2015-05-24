@@ -20,11 +20,13 @@ var Installer = function(conf){
 			'open-sans-fontface','google-code-prettify',
 			'font-awesome',
 			'lunr.js','marked'];
+
 	this.config = {
 		outputFolder:conf.outputFolder,
 		cssFolder:path.join(conf.outputFolder,'css'),
 		jsFolder:path.join(conf.outputFolder,'js'),
 		fontsFolder:path.join(conf.outputFolder,'fonts'),
+		fontFolder:path.join(conf.outputFolder,'font'),
 		imagesFolder:path.join(conf.outputFolder,'images'),
 		localFolder:path.resolve(__dirname,'../../client')
 	};
@@ -40,23 +42,25 @@ Installer.prototype = {
 		gulp.src(path.join(this.config.localFolder,'js/*.js'))
 			.pipe(concat('docs.min.js'))
 			.pipe(gulp.dest(this.config.jsFolder));
+		gulp.src(path.join(this.config.localFolder,'lib/*.js'))
+			.pipe(gulp.dest(this.config.jsFolder));
+			gulp.src(path.join(this.config.localFolder,'libCss/*.css'))
+			.pipe(gulp.dest(this.config.cssFolder));
 		gulp.src([path.join(this.config.localFolder,'js/crafty/*.js'),
 			path.join(this.config.localFolder,'js/crafty/**/*.js')])
 			.pipe(concat('crafty.min.js'))
 			.pipe(uglify())
 			.pipe(gulp.dest(this.config.jsFolder));
-			// .pipe(gulp.dest(this.config.outputFolder))
-		// console.log('Copying root files');
-		// gulp.src(path.join(this.config.localFolder,'base/*.*'),{
-		// 		dot:true
-		// 	})
-		// 	.pipe(gulp.dest(this.config.outputFolder));
 		gulp.src(path.join(this.config.localFolder,'images/*.*'))
 			.pipe(gulp.dest(this.config.imagesFolder));
-		gulp.src(path.join(this.config.localFolder,'fonts/*.'))
-		  	.pipe(gulp.dest(this.config.fontsFolder));
-		bower.commands.install(this.config.packages,{save:true})
-			.on('end',util.proxy(this.onPackagesInstalled,this,callback));
+		gulp.src(path.join(this.config.localFolder,'fonts/**/*.*'))
+		  	.pipe(gulp.dest(this.config.fontsFolder))
+		  	.pipe(gulp.dest(path.join(this.config.cssFolder,'fonts')));
+	  	gulp.src(path.join(this.config.localFolder,'font/**/*.*'))
+		  	.pipe(gulp.dest(this.config.fontsFolder))
+		  	.pipe(gulp.dest(path.join(this.config.cssFolder,'font')));
+		// bower.commands.install(this.config.packages,{save:true})
+		// 	.on('end',util.proxy(this.onPackagesInstalled,this,callback));
 	},
 	onPackagesInstalled:function(){
 		console.log('Bower packages installed successfully.');
@@ -65,9 +69,10 @@ Installer.prototype = {
 		if (callback){
 			callback(installed);
 		}
-		this.list((callback && callback.list)?callback.list:undefined);
+		this.list((callback && callback.list)?callback.list:installed);
 	},
-	list:function(callback){
+	list:function(callback,f){
+		console.log(callback);
 		console.log('Retreiving details of bower packages.');
 		// var content = shelljs.exec('bower list --json '+__dirname);
 		// if (content.code === 0){
@@ -76,8 +81,9 @@ Installer.prototype = {
 		console.log('ZEEEETA: ',path.resolve(__dirname,'../..'));
 		bower.commands.list(undefined,{
 			cwd:path.resolve(__dirname,'../..'),
+			paths:true,
 			json:true
-		},{json:true}).on('end',util.proxy(this.onPackagesListed,this,callback));
+		},{json:true,paths:true}).on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
 	onPackagesListed:function(){
 		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
