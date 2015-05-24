@@ -1,6 +1,6 @@
 {
   "name": "suh-dgeni-ngdocs",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A package to generate ng-docs similar to what is used on AngularJS website.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   ],
   "author": "Suhail Abood <suhail.abood@gmail.com> (suhailabood.me)",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "bower": "^1.4.1",
     "canonical-path": "0.0.2",
     "dgeni": "^0.4.1",
