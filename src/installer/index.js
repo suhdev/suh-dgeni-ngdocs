@@ -73,8 +73,9 @@ Installer.prototype = {
 		// if (content.code === 0){
 		// 	this.onPackagesListed(JSON.parse(content.output));
 		// }
-		bower.commands.list({json:true},{
+		bower.commands.list(undefined,{
 			cwd:path.resolve(__dirname,'../..'),
+			relative:false,
 			json:true
 		},{json:true}).on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
