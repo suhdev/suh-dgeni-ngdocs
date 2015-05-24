@@ -69,12 +69,14 @@ Installer.prototype = {
 	},
 	list:function(callback){
 		console.log('Retreiving details of bower packages.');
-		var content = shelljs.exec('bower list --json '+__dirname);
-		if (content.code === 0){
-			this.onPackagesListed(JSON.parse(content.output));
-		}
-		// bower.commands.list.line(['node','bower','list','--json',__dirname])
-		// 	.on('end',util.proxy(this.onPackagesListed,this,callback));
+		// var content = shelljs.exec('bower list --json '+__dirname);
+		// if (content.code === 0){
+		// 	this.onPackagesListed(JSON.parse(content.output));
+		// }
+		bower.commands.list(undefined,{
+			cwd:path.resolve(__dirname,'../..'),
+			json:true
+		}).on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
 	onPackagesListed:function(){
 		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
