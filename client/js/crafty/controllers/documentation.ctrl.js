@@ -1,12 +1,14 @@
 angular.module('Crafty')
   .controller('DocumentationCtrl',['$scope','$rootScope','$location',
-  'NG_NAVIGATION','NG_PAGES',function($S,$RT,$L,NGV,NGP){
+  'NG_NAVIGATION','NG_PAGES','openPlunkr', function($S,$RT,$L,NGV,NGP,OPL){
   var self = this;
   this.showSearch = false;
   this.navMenu = [];
   this.file = '';
   this.pageTitle = '';
   this.parents = _(NGV).keys().value();
+
+  $RT.openPlunkr = OPL;
 
   this.toggleSearch = function(){
     self.showSearch = !self.showSearch;

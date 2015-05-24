@@ -28,7 +28,11 @@ var Installer = function(conf){
 		fontsFolder:path.join(conf.outputFolder,'fonts'),
 		fontFolder:path.join(conf.outputFolder,'font'),
 		imagesFolder:path.join(conf.outputFolder,'images'),
-		localFolder:path.resolve(__dirname,'../../client')
+		localFolder:path.resolve(__dirname,'../../client'),
+		userJs:conf.defaultDeployment?(conf.defaultDeployment.scripts ||[]):[],
+		userFonts:conf.defaultDeployment?(conf.defaultDeployment.fonts ||[]):[],
+		userCss:conf.defaultDeployment?(conf.defaultDeployment.stylesheets ||[]):[],
+		userMisc:conf.defaultDeployment?(conf.defaultDeployment.misc ||[]):[]
 	};
 	this.config.packages = (conf && conf.packages)? [].concat(conf.packages,c):c;
 };
@@ -38,14 +42,22 @@ Installer.prototype = {
 		console.log('Copying stylesheets ');
 		gulp.src(path.join(this.config.localFolder,'css/*.css'))
 			.pipe(gulp.dest(this.config.cssFolder));
+		gulp.src(this.config.userCss)
+			.pipe(gulp.dest(this.config.cssFolder));
 		console.log('Copying scripts');
+
 		gulp.src(path.join(this.config.localFolder,'js/*.js'))
 			.pipe(concat('docs.min.js'))
 			.pipe(gulp.dest(this.config.jsFolder));
 		gulp.src(path.join(this.config.localFolder,'lib/*.js'))
 			.pipe(gulp.dest(this.config.jsFolder));
-			gulp.src(path.join(this.config.localFolder,'libCss/*.css'))
+		gulp.src(path.join(this.config.localFolder,'libCss/*.css'))
 			.pipe(gulp.dest(this.config.cssFolder));
+		console.log(this.config.userJs);
+		gulp.src(this.config.userJs)
+			.pipe(gulp.dest(this.config.jsFolder));
+		gulp.src(this.config.userFonts)
+			.pipe(gulp.dest(this.config.fontsFolder));
 		gulp.src([path.join(this.config.localFolder,'js/crafty/*.js'),
 			path.join(this.config.localFolder,'js/crafty/**/*.js')])
 			.pipe(concat('crafty.min.js'))
@@ -59,6 +71,26 @@ Installer.prototype = {
 	  	gulp.src(path.join(this.config.localFolder,'font/**/*.*'))
 		  	.pipe(gulp.dest(this.config.fontsFolder))
 		  	.pipe(gulp.dest(path.join(this.config.cssFolder,'font')));
+
+		_(this.config.userMisc)
+			.forEach(function(e){
+				if (_.isObject(e)){
+					gulp.src(e.src)
+						.pipe(gulp.dest(path.resolve(this.config.outputFolder,e.dest)));
+				}else if (_.isString(e)){
+					var d = './';
+					if (/\.js$/.test(e)){
+						d = 'js';
+					}else if (/\.css$/.test(e)){
+						d = 'css';
+					}else if (/(\.eot|\.svg|\.ttf|\.woff|\.woff)$/.test(e)){
+						d = 'fonts';
+					}
+					gulp.src(e)
+						.pipe(gulp.dest(path.resolve(this.config.outputFolder,d)));
+				}
+			})
+			.commit();
 		// bower.commands.install(this.config.packages,{save:true})
 		// 	.on('end',util.proxy(this.onPackagesInstalled,this,callback));
 	},

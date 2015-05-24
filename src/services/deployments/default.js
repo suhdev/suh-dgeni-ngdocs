@@ -1,5 +1,6 @@
 "use strict";
-var _ = require('lodash');
+var _ = require('lodash'),
+  path = require('canonical-path');
 
 module.exports = function(conf){
   return function defaultDeployment(getVersion) {
@@ -47,9 +48,9 @@ module.exports = function(conf){
       },
       examples: {
         commonFiles: {
-          scripts: [ '../../../angular.min.js' ]
+          scripts: [ '../../js/angular.min.js' ]
         },
-        dependencyPath: '../../../'
+        dependencyPath: '../../js/'
       },
     },
     files = {
@@ -86,8 +87,18 @@ module.exports = function(conf){
       ]
     };
     var opts = _.extend({},def,conf.defaultDeployment);
-    files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
-    files.stylesheets = [].concat(files.stylesheets,conf.defaultDeployment.stylesheets?conf.defaultDeployment.stylesheets:[]);
+    _(conf.defaultDeployment.scripts)
+      .forEach(function(e){
+        files.scripts.push('js/'+path.basename(e));
+      })
+      .commit();
+    _(conf.defaultDeployment.stylesheets)
+      .forEach(function(e){
+        files.css.push('css/'+path.basename(e));
+      })
+      .commit();
+    // files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
+    // files.stylesheets = [].concat(files.stylesheets,conf.defaultDeployment.stylesheets?conf.defaultDeployment.stylesheets:[]);
     opts.scripts = files.scripts;
     opts.stylesheets = files.stylesheets;
     return opts;

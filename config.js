@@ -11,7 +11,8 @@ module.exports = function(conf){
   
   return new Package('suh-docs', [
     require('dgeni-packages/ngdoc'),
-    require('dgeni-packages/nunjucks')
+    require('dgeni-packages/nunjucks'),
+    require('dgeni-packages/examples')
   ])
 
   .factory(require('./src/services/errorNamespaceMap'))
@@ -32,7 +33,7 @@ module.exports = function(conf){
   .processor(require('./src/processors/keywords'))
   .processor(require('./src/processors/pages-data')(conf))
   .processor(require('./src/processors/versions-data'))
-  .processor(require('./src/processors/home-page')(conf))
+  // .processor(require('./src/processors/home-page')(conf))
 
 
   .config(function(dgeni, log, readFilesProcessor, writeFilesProcessor) {
@@ -170,7 +171,8 @@ module.exports = function(conf){
   .config(function(
     generateIndexPagesProcessor,
     debugDeployment, defaultDeployment,
-    jqueryDeployment, productionDeployment) {
+    jqueryDeployment, productionDeployment,
+    generateExamplesProcessor,generateProtractorTestsProcessor ) {
 
     generateIndexPagesProcessor.deployments = [
       debugDeployment,
@@ -179,18 +181,25 @@ module.exports = function(conf){
       productionDeployment
     ];
 
-    // generateProtractorTestsProcessor.deployments = [
-    //   defaultDeployment,
-    //   jqueryDeployment
-    // ];
-
-    // generateProtractorTestsProcessor.basePath = 'build/docs/';
-
     // generateExamplesProcessor.deployments = [
     //   debugDeployment,
     //   defaultDeployment,
     //   jqueryDeployment,
     //   productionDeployment
     // ];
+
+    generateProtractorTestsProcessor.deployments = [
+      defaultDeployment,
+      jqueryDeployment
+    ];
+
+    generateProtractorTestsProcessor.basePath = conf.outputFolder||'build/docs/';
+
+    generateExamplesProcessor.deployments = [
+      debugDeployment,
+      defaultDeployment,
+      jqueryDeployment,
+      productionDeployment
+    ];
   });
 };

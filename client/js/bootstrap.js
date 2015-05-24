@@ -27,6 +27,7 @@ directive.runnableExample = ['$templateCache', '$document', function($templateCa
       };
     }],
     compile : function(element) {
+      console.log(element);
       element.html(tpl + element.html());
       return function(scope, element) {
         var node = element[0];
@@ -435,6 +436,7 @@ angular.module('bootstrap', [])
   .directive(directive)
   .factory('popoverElement', popoverElement)
   .run(function() {
+    console.log('hey');
     marked.setOptions({
       gfm: true,
       tables: true

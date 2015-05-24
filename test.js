@@ -1,6 +1,13 @@
 var generator = require('./'),
 	path = require('canonical-path'),
+	gulp = require('gulp'),
+	concat = require('gulp-concat'),
 	src = require('./src/services/gitData');
+
+	gulp.src(['./testsrc/*.js','./testsrc/**/*.js'])
+		.pipe(concat('app.min.js'))
+		.pipe(gulp.dest('./'));
+
 generator.generate({
 	defaultDeployment:{
 		name:'default',
@@ -33,9 +40,13 @@ generator.generate({
           			type:'divider'
           		}]
 			}
-		}
+		},
+		scripts:[path.resolve('./app.min.js')]
 	},
-	basePath:path.resolve('testsrc'), 
+	basePath:path.resolve('testsrc'),
+	scripts:[],
+	stylesheets:[],
+	fonts:[],
 	sourceFiles:[
 		'*.js',
 		'**/*.ngdoc'],
