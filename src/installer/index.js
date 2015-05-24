@@ -82,9 +82,11 @@ Installer.prototype = {
 		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
 		e = (arguments.length == 2)?arguments[1]:arguments[0];
 		f = (arguments.length == 2)?arguments[0]:undefined;
-		console.log(e);
+		// console.log(e);
 		p = _(e.dependencies)
 			.transform(function(obj,n,key){
+				console.log(key.toUpperCase()+": ", JSON.stringify(n));
+				// console.log(n);
 
 				var item = {
 					path:n.canonicalDir,
