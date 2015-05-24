@@ -1,0 +1,117 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish', '.' ]
+2 info using npm@2.10.1
+3 info using node@v0.12.4
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec { raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/suhail/Sites/suh-dgeni',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package.tgz not in flight; packing
+9 verbose tar pack [ '/Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package.tgz',
+9 verbose tar pack   '/Users/suhail/Sites/suh-dgeni' ]
+10 verbose tarball /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package.tgz
+11 verbose folder /Users/suhail/Sites/suh-dgeni
+12 info prepublish suh-dgeni-ngdocs@0.5.54
+13 verbose addLocalTarball adding from inside cache /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package.tgz
+14 silly cache afterAdd suh-dgeni-ngdocs@0.5.54
+15 verbose afterAdd /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package/package.json not in flight; writing
+16 verbose afterAdd /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package/package.json written
+17 silly publish { name: 'suh-dgeni-ngdocs',
+17 silly publish   version: '0.5.54',
+17 silly publish   description: 'A package to generate ng-docs similar to what is used on AngularJS website.',
+17 silly publish   main: 'index.js',
+17 silly publish   scripts: { test: 'jasmine' },
+17 silly publish   repository:
+17 silly publish    { type: 'git',
+17 silly publish      url: 'git+https://github.com/suhdev/suh-dgeni-ngdocs.git' },
+17 silly publish   keywords: [ 'ngdocs', 'angularjs', 'dgeni', 'dgeni-ngdocs', 'generate' ],
+17 silly publish   author:
+17 silly publish    { name: 'Suhail Abood',
+17 silly publish      email: 'suhail.abood@gmail.com',
+17 silly publish      url: 'suhailabood.me' },
+17 silly publish   license: 'ISC',
+17 silly publish   dependencies:
+17 silly publish    { bower: '^1.4.1',
+17 silly publish      'canonical-path': '0.0.2',
+17 silly publish      dgeni: '^0.4.1',
+17 silly publish      'dgeni-packages': '^0.10.13',
+17 silly publish      'git-data-extractor': '^1.0.0',
+17 silly publish      gulp: '^3.8.11',
+17 silly publish      'gulp-concat': '^2.5.2',
+17 silly publish      'gulp-concat-util': '^0.5.2',
+17 silly publish      'gulp-cssmin': '^0.1.7',
+17 silly publish      'gulp-insert': '^0.4.0',
+17 silly publish      'gulp-jshint': '^1.10.0',
+17 silly publish      'gulp-rename': '^1.2.2',
+17 silly publish      'gulp-sourcemaps': '^1.5.2',
+17 silly publish      'gulp-uglify': '^1.2.0',
+17 silly publish      'gulp-util': '^3.0.4',
+17 silly publish      lodash: '^3.9.1',
+17 silly publish      'node-html-encoder': '0.0.2',
+17 silly publish      semver: '^4.3.4',
+17 silly publish      shelljs: '^0.5.0',
+17 silly publish      stringmap: '^0.2.2',
+17 silly publish      underscore: '^1.8.3' },
+17 silly publish   readme: '#suh-dgeni-ngdocs\n\nA package to generate ngdocs using Dgeni similar to whats currently used on AngularJS website. ',
+17 silly publish   readmeFilename: 'README.md',
+17 silly publish   gitHead: 'dfd1c2d5f19fe010593f11af6479270cc414a882',
+17 silly publish   bugs: { url: 'https://github.com/suhdev/suh-dgeni-ngdocs/issues' },
+17 silly publish   homepage: 'https://github.com/suhdev/suh-dgeni-ngdocs#readme',
+17 silly publish   _id: 'suh-dgeni-ngdocs@0.5.54',
+17 silly publish   _shasum: 'ea5693814a1ae199213f7ba3995888058fe10267',
+17 silly publish   _from: '.' }
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name suh-dgeni-ngdocs
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/suh-dgeni-ngdocs
+23 verbose publish registryBase https://registry.npmjs.org/
+24 silly publish uploading /Users/suhail/.npm/suh-dgeni-ngdocs/0.5.54/package.tgz
+25 verbose request uri https://registry.npmjs.org/suh-dgeni-ngdocs
+26 verbose request sending authorization for write operation
+27 info attempt registry request try #1 at 12:08:00 PM
+28 verbose request using bearer token for auth
+29 verbose request id 43087150bd5afde0
+30 http request PUT https://registry.npmjs.org/suh-dgeni-ngdocs
+31 http 403 https://registry.npmjs.org/suh-dgeni-ngdocs
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=60',
+32 verbose headers   'content-length': '96',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Sun, 24 May 2015 11:08:02 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-lhr6323-LHR',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1432465680.885292,VS0,VE1447' }
+33 verbose request invalidating /Users/suhail/.npm/registry.npmjs.org/suh-dgeni-ngdocs on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: "You cannot publish over the previously published version 0.5.54." : suh-dgeni-ngdocs
+35 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:247:14)
+35 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+35 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:368:22)
+35 verbose stack     at Request.emit (events.js:110:17)
+35 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1219:14)
+35 verbose stack     at Request.emit (events.js:129:20)
+35 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1167:12)
+35 verbose stack     at IncomingMessage.emit (events.js:129:20)
+35 verbose stack     at _stream_readable.js:908:16
+35 verbose stack     at process._tickCallback (node.js:355:11)
+36 verbose statusCode 403
+37 verbose pkgid suh-dgeni-ngdocs
+38 verbose cwd /Users/suhail/Sites/suh-dgeni
+39 error Darwin 14.0.0
+40 error argv "node" "/usr/local/bin/npm" "publish" "."
+41 error node v0.12.4
+42 error npm  v2.10.1
+43 error code E403
+44 error "You cannot publish over the previously published version 0.5.54." : suh-dgeni-ngdocs
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]

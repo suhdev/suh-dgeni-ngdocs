@@ -73,9 +73,9 @@ Installer.prototype = {
 		// if (content.code === 0){
 		// 	this.onPackagesListed(JSON.parse(content.output));
 		// }
+		console.log('ZEEEETA: ',path.resolve(__dirname,'../..'));
 		bower.commands.list(undefined,{
 			cwd:path.resolve(__dirname,'../..'),
-			relative:false,
 			json:true
 		},{json:true}).on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
