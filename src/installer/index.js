@@ -73,10 +73,10 @@ Installer.prototype = {
 		// if (content.code === 0){
 		// 	this.onPackagesListed(JSON.parse(content.output));
 		// }
-		bower.commands.list(undefined,{
+		bower.commands.list({json:true},{
 			cwd:path.resolve(__dirname,'../..'),
 			json:true
-		}).on('end',util.proxy(this.onPackagesListed,this,callback));
+		},{json:true}).on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
 	onPackagesListed:function(){
 		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
