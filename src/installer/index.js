@@ -68,7 +68,7 @@ Installer.prototype = {
 	},
 	list:function(callback){
 		console.log('Retreiving details of bower packages.');
-		bower.commands.list.line(['node','bower','list','--json'])
+		bower.commands.list.line(['node','bower','list','--json',__dirname])
 			.on('end',util.proxy(this.onPackagesListed,this,callback));
 	},
 	onPackagesListed:function(){
