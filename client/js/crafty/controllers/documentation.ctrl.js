@@ -46,7 +46,7 @@ angular.module('Crafty')
     return {
       'uk-active': navItem.href && this.currentPage && this.currentPage.path,
       'uk-current': this.currentPage && this.currentPage.path === navItem.href,
-      'nav-index-section': navItem.type === 'section'
+      'nav-index-section section-item uk-text-bold': navItem.type === 'section',
     };
   };
 
