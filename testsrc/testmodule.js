@@ -1,3 +1,12 @@
+/** 
+ * @ngdoc overview
+ * @name HomePage
+ * @module Test
+ * @description 
+ * home page text goes here
+ *
+ */
+
 /**
  * @ngdoc module
  * @name Test

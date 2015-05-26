@@ -34,7 +34,7 @@ module.exports = function(conf){
   .processor(require('./src/processors/keywords'))
   .processor(require('./src/processors/pages-data')(conf))
   .processor(require('./src/processors/versions-data'))
-  // .processor(require('./src/processors/home-page')(conf))
+  .processor(require('./src/processors/home-page')(conf))
 
 
   .config(function(dgeni, log, readFilesProcessor, writeFilesProcessor) {

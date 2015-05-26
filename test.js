@@ -2,17 +2,19 @@ var generator = require('./'),
 	path = require('canonical-path'),
 	gulp = require('gulp'),
 	concat = require('gulp-concat'),
+	fs = require('fs'),
 	src = require('./src/services/gitData');
 
 	gulp.src(['./testsrc/*.js','./testsrc/**/*.js'])
 		.pipe(concat('app.min.js'))
 		.pipe(gulp.dest('./'));
-
+var k = fs.readFileSync('./README.md').toString();
+console.log(k);
 generator.generate({
 	defaultDeployment:{
 		name:'default',
 		meta:{
-			description:'This is just a test suite'
+			description:'just a test',
 		},
 		navigation:{
 			top:{
@@ -57,7 +59,7 @@ generator.generate({
 	homePage:{
 		data:{
 			title:'Suhail Abood Library',
-			description:'A library to do something.',
+			description:k,
 			dependencies:[{
 				name:'angular',
 				version:'1.3.15'

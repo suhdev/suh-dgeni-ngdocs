@@ -13,7 +13,7 @@ module.exports = function(conf){
           docs.push({
             docType: 'home-page',
             id: 'home-page',
-            template: conf.homePage.template || 'home-page.template.html',
+            template: conf.homePage.template || 'homepage.template.html',
             outputPath: 'partials/api/home.base.html',
             homePage: conf.homePage.data || {}
           });
