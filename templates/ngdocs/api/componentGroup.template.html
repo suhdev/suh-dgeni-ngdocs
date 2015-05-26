@@ -1,27 +1,44 @@
 {% block content %}
-<h1>
-  {%- if doc.title -%}
-    {$ doc.title $}
-  {%- elif doc.moduleName -%}
-    {$ doc.groupType | title $} components in {$ doc.moduleName | code $}
-  {%- else -%}
-    Pages
-  {%- endif -%}
-</h1>
+<div class="uk-block uk-block-primary uk-contrast doc-type-{$ doc.docType $}">
+  <div class="uk-container">
+    <h1>
+      {%- if doc.title -%}
+        {$ doc.title | marked $}
+      {%- elif doc.moduleName -%}
+        {$ doc.groupType | title $} components in {$ doc.moduleName $}
+      {%- else -%}
+        Pages
+      {%- endif -%}
+    </h1>
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-1-1">
+        {$ doc.briefdesc | marked $}
+      </div>
+    </div>
+  </div>
+</div>
 
+<p>
 {$ doc.description | marked $}
+</p>
 
 <div class="component-breakdown">
   <div>
-    <table class="definition-table">
+    <table class="uk-table definition-table">
       <tr>
-        <th>Name</th>
-        <th>Description</th>
+        <th class="uk-width-2-10">Name</th>
+        <th class="uk-width-7-10">Description</th>
       </tr>
       {% for page in doc.components %}
       <tr>
         <td>{$ page.id | link(page.name, page) $}</td>
-        <td>{$ page.description | firstParagraph | marked $}</td>
+        <td>
+        {% if page.briefdesc %}
+          {$ page.briefdesc | marked $}
+        {% else %}
+        {$ page.description | firstParagraph | marked $}
+        {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </table>

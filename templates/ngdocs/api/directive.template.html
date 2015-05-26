@@ -14,7 +14,7 @@
   {% if doc.usage %}
     {$ doc.usage | marked $}
   {% else %}
-    <ul>
+    <ul class="uk-list">
     {% if doc.restrict.element %}
       <li>as element:
       {% if doc.name.indexOf('ng') == 0 -%}
