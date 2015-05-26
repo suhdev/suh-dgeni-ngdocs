@@ -1,0 +1,56 @@
+{% extends "base.template.html" %}
+
+{% block content %}
+<div class="uk-block uk-block-primary uk-contrast doc-type-{$ doc.docType $}">
+  <div class="uk-container">
+    <h1>
+      {% if doc.title %}{$ doc.title | marked $}{% else %}{$ doc.name $}{% endif %}
+    </h1>
+    <div class="uk-grid" data-uk-grid-margin>
+      <div class="uk-width-1-1">
+        {$ doc.briefdesc | marked $}
+      </div>
+    </div>
+    <a href='https://github.com/{$ git.info.owner $}/{$ git.info.repo $}/tree/{$ git.version.isSnapshot and 'master' or git.version.raw $}/{$ doc.fileInfo.projectRelativePath $}#L{$ doc.startingLine $}' class='uk-badge uk-badge-success'>
+    <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source</a>
+  <a href='https://github.com/angular/angular.js/edit/{$ git.version.branch $}/{$ doc.fileInfo.projectRelativePath $}?message=docs({$ (doc.area != "api") and (doc.area + "%2F") or "" $}{$ doc.name $})%3A%20describe%20your%20change...{$ (doc.area == "api") and ("#L" + doc.startingLine) or "" $}' class='improve-docs uk-badge-success uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+  </div>
+</div>
+<p>
+{$ doc.description | marked $}
+</p>
+{% if doc.name != 'ng' and doc.name != 'auto' %}
+
+{% if doc.installation %}
+<div class="installation-block">
+  <h2>Installation</h2>
+  <div class="installation-description">
+  {$ doc.installation | marked $}
+  </div>
+</div>
+{% endif %}
+
+<div class="component-breakdown">
+  <h2>Module Components</h2>
+  {% for componentGroup in doc.componentGroups %}
+    <h3 class="component-heading" id="{$ componentGroup.groupType | dashCase $}">{$ componentGroup.groupType | title $}</h3>
+    {% for component in componentGroup.components %}
+    <dl class="uk-description-list-horizontal">
+        <dt>
+          {$ component.id | link(component.name, component) $}
+        </dt>
+        <dd>
+          {$ component.description | firstParagraph | marked $}
+        </dd>
+    </dl>
+    {% endfor %}
+  {% endfor %}
+</div>
+
+{% endif %}
+{% if doc.usage %}
+  <h2>Usage</h2>
+  {$ doc.usage | marked $}
+{% endif %}
+
+{% endblock %}

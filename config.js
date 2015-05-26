@@ -26,6 +26,7 @@ module.exports = function(conf){
   .factory(require('./src/services/deployments/production'))
 
   .factory(require('./src/inline-tag-defs/type'))
+  .factory(require('./src/inline-tag-defs/inlinenote'))
 
   //.processor(require('./src/processors/module-docs')(conf))
   .processor(require('./src/processors/error-docs'))
@@ -59,6 +60,10 @@ module.exports = function(conf){
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/tutorial-step'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/sortOrder'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/lib'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/installation'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/note'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/todo'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/briefdesc'));
     if (conf.tagDefinitions){
       _(conf.tagDefinitions).forEach(function(tag){
         parseTagsProcessor.tagDefinitions.push(require(tag));
@@ -67,8 +72,9 @@ module.exports = function(conf){
   })
 
 
-  .config(function(inlineTagProcessor, typeInlineTagDef) {
+  .config(function(inlineTagProcessor, typeInlineTagDef,noteInlineTagDef) {
     inlineTagProcessor.inlineTagDefinitions.push(typeInlineTagDef);
+    inlineTagProcessor.inlineTagDefinitions.push(noteInlineTagDef);
     if (conf.inlineTagDefinitions){
       _(conf.inlineTagDefinitions).forEach(function(tag){
         inlineTagProcessor.inlineTagDefinitions.push(require(tag));
@@ -78,20 +84,24 @@ module.exports = function(conf){
 
 
   .config(function(templateFinder, renderDocsProcessor, gitData) {
+    templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates/examples'));
+    templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates/ngdocs'));
     templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates'));
+    console.log(templateFinder.templateFolders);
     if (conf.templates){
       _(conf.templates)
         .forEach(function(template){
           templateFinder.templateFolders.unshift(template);
         });
     }
-    renderDocsProcessor.extraData.git = gitData;
+    renderDocsProcessor.extraData.git = conf.git || gitData;
     renderDocsProcessor.extraData.payload = conf.extraData || {};
     // renderDocsProcessor
   })
 
 
-  .config(function(computePathsProcessor, computeIdsProcessor) {
+  .config(function(computePathsProcessor, computeIdsProcessor,templateFinder) {
+    
 
     computePathsProcessor.pathTemplates.push({
       docTypes: ['error'],

@@ -7,13 +7,7 @@
   <meta name="Description"
         content="{$ doc.meta.description $}">
   <meta name="fragment" content="!">
-  <style>
-  .nothing,.nothing:visited,.nothing:active,.nothing:hover{
-    color:initial;
-    text-transform:none;
-    text-decoration:none;
-  }
-  </style>
+ <link href='http://fonts.googleapis.com/css?family=Exo:200,300,400,500,700,900|Inconsolata:400,700' rel='stylesheet' type='text/css'>
   <title ng-bind-template="{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}: {{ currentArea.name }}: {{ currentPage.name || 'Error: Page not found'}}">{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}</title>
 
   <script type="text/javascript">
@@ -62,106 +56,170 @@
     })();
 
   </script>
+  <style>
+  body *,html *{
+  	font-family:"Exo","Helvetica Neue",sans-serif !important;
+  }
+  .suh-navbar{
+  	background:black;
+  	padding:15px 0px;
+  }
+
+  .suh-navbar .uk-navbar-nav > li.uk-active > a {
+  background-color: #2BA3D4;
+  color: #FFF;
+}
+
+.suh-navbar .uk-navbar-nav > li > a {
+  height: 40px;
+  margin: 0;
+  border: none;
+  border-radius: 3px !important;
+  text-shadow: none;
+  font-size: 15px;
+  color:#666;
+  font-weight:200;
+}
+
+.suh-navbar .uk-navbar-nav > li {
+  margin-left: 20px;
+}
+
+.suh-grid{
+	margin:15px 0px;
+}
+
+
+@media(min-width:600px){
+	.tm-middle{
+		padding: 60px 0;
+	}
+}
+
+
+.uk-nav .uk-nav{
+	padding-left:30px;
+}
+
+.installation-block{
+	padding:20px 0px;
+}
+
+pre,code,
+pre *,code *{
+	font-family:'Inconsolata',monospace !important;
+
+}
+
+.example-files pre{
+	border-top:none;
+}
+
+</style>
 </head>
 <body>
-  <div class="container-fluid">
-      <div class="row">
-          <div class="navbar navbar-default" style="border-radius:0px;">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                  {% if doc.logo %}
-                    <a class="brand navbar-brand {$ doc.logo.classes $}" href="{$ doc.appUrl $}" style="{$ doc.logo.styles $}">
+	<div class="tm-background">
+		<div class="suh-navbar uk-navbar uk-navbar-attached">
+			<div class="uk-container uk-container-center">
+				{% if doc.logo %}
+                    <a class="brand uk-navbar-brand {$ doc.logo.classes $}" href="{$ doc.appUrl $}" style="{$ doc.logo.styles $}">
                       <img style="{$ doc.logo.imgStyles $}" class="logo" ng-src="{$ doc.logo.imgSrc if doc.logo.imgSrc else 'images/suh-dgeni-logo.png' $}">
                     </a>
-                  {% else %}
-                    <a class="brand navbar-brand" href="{$ doc.appUrl $}" style="text-align:center;border-radius:15px;padding:0px;">
-                      <img style="height:90%;margin-top:5%;max-height:initial !important;padding:0px 10px;" class="logo" ng-src="{$ doc.logoUrl if (doc.logoUrl) else 'images/suh-dgeni-logo.png' $}">
+                {% else %}
+                    <a class="uk-navbar-brand uk-hidden-small" href="{$ doc.appUrl $}">
+                      <img class="uk-margin uk-margin-remove" ng-src="{$ doc.logoUrl if (doc.logoUrl) else 'images/suh-dgeni-logo.png' $}" style="height:90%;height: 130%;margin-top: -15% !important;">
                     </a>
-                  {% endif %}
-              </div>
-              <div class="navbar-collapse collapse navbar-inverse-collapse">
-                  <ul class="nav navbar-nav">
-                  {% for navItem in doc.navigation.top.navItems %}
-                      {% if navItem.type == 'divider' %}
-                      <li class="divider"></li>
-                      {% elif navItem.type == 'dropdown' %}
-                      <li class="dropdown">
-                          <a href="{$ navItem.url $}" data-target="#" class="dropdown-toggle" data-toggle="dropdown">{$ navItem.label $} <b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                          {% for item in navItem.menu %}
-                              <li><a href="{$ item.url $}">{$ item.label $}</a></li>
-                          {% endfor %}
-                          </ul>
-                      </li>
-                      {% else %}
-                      <li>
-                        <a ng-class="{'active':documentCtrl.isActive('{$ navItem.url $}" href="{$ navItem.url $}">{$ navItem.label $}</a>
-                      </li>
-                      {% endif %}
-                  {% endfor %}
-                  </ul>
-                  <form class="navbar-form navbar-left" ng-controller="SearchCtrl as searchCtrl">
-                      <input type="text" class="form-control col-lg-8" ng-model="searchCtrl.query" placeholder="Search" ng-enter="searchCtrl.search()">
-                  </form>
-                  <ul class="nav navbar-nav navbar-right">
-                      <li><a href="javascript:void(0)">Link</a></li>
-                      <li class="dropdown">
-                          <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                              <li><a href="javascript:void(0)">Action</a></li>
-                              <li><a href="javascript:void(0)">Another action</a></li>
-                              <li><a href="javascript:void(0)">Something else here</a></li>
-                              <li class="divider"></li>
-                              <li><a href="javascript:void(0)">Separated link</a></li>
-                          </ul>
-                      </li>
-                  </ul>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <ul class="breadcrumb animated bounceIn" ng-controller="BreadcrumbCtrl as breadCrumbCtrl">
-            <li ng-repeat="item in breadCrumbCtrl.items">
-                <a ng-href="{{item.url}}" ng-bind="item.label"></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3" style="max-width:300px;">
-          <ul class="nav-list naked-list animated slideInLeft" >
-            <li ng-repeat="navGroup in currentArea.navGroups track by navGroup.name" class="nav-index-group">
-              <a href="{{ navGroup.href }}" ng-class="navClass(navGroup)" class="nav-index-group-heading">{{ navGroup.name }}</a>
-              <ul class="aside-nav">
-                <li ng-repeat="navItem in navGroup.navItems" ng-class="navClass(navItem)" class="nav-index-listing">
-                  <a ng-if="navItem.extra.href" ng-class="navClass(navItem.extra)" href="{{navItem.extra.href}}">
-                    {{navItem.extra.text}}<i ng-if="navItem.extra.icon" class="icon-{{navItem.extra.icon}}"></i>
-                  </a>
-                  <a tabindex="2" ng-class="linkClass(navItem)" href="{{navItem.href}}">{{navItem.name}}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="col-sm-9">
-          <div class="panel panel-default">
-              <div class="panel-body">
-                <div ng-include="documentCtrl.file">
-                  
+				{% endif %}
+				<ul class="uk-navbar-nav">
+					{% for navItem in doc.navigation.top.navItems %}
+						{% if navItem.type == 'divider' %}
+						<li class="divider"></li>
+					  	{% elif navItem.type == 'dropdown' %}
+						<li class="uk-parent" data-uk-dropdown>
+					    	<a href="{$ navItem.url $}" data-target="#">{$ navItem.label $} <b class="caret"></b>
+					    	</a>
+					    	<div class="uk-dropdown uk-dropdown-navbar">
+						      	<ul class="uk-nav uk-nav-navbar">
+						      	{% for item in navItem.menu %}
+						        	<li><a href="{$ item.url $}">{$ item.label $}</a></li>
+						      	{% endfor %}
+						      	</ul>
+					    	</div>
+						</li>
+					  	{% else %}
+					  	<li>
+					    	<a ng-class="{'active':documentCtrl.isActive('{$ navItem.url $}" href="{$ navItem.url $}">{$ navItem.label $}
+					    	</a>
+					  	</li>
+				  		{% endif %}
+					{% endfor %}
+				</ul>
+				<div class="uk-navbar-content uk-hidden-small">
+                    <form class="uk-form uk-margin-remove uk-display-inline-block">
+                        <input type="text" placeholder="Search">
+                        <button class="uk-button uk-button-primary">Submit</button>
+                    </form>
                 </div>
-              </div>
-          </div>
-        </div>
-      </div>
+			</div>
+		</div>
+		<div class="suh-grid uk-grid">
+			<div class="uk-container uk-width-1-1 uk-container-center">
+				<div class="uk-panel uk-panel-box">
+					<ul class="uk-breadcrumb" ng-controller="BreadcrumbCtrl as breadCrumbCtrl">
+					    <li ng-repeat="item in breadCrumbCtrl.items">
+					    	<a ng-href="{{item.url}}" ng-bind="item.label"></a>
+					    </li>
+					</ul>
+				    
+				</div>
+			</div>
+			
+		</div>
+		<div class="tm-middle">
+			<div class="uk-grid" style="margin:0px;">
+				<div class="uk-container uk-container-center uk-width-1-1">
+					<div class="uk-grid">
+						<div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
+				          	<ul class="uk-nav uk-nav-side uk-nav-parent-icon">
+				                <li class="uk-parent uk-open" ng-repeat="navGroup in currentArea.navGroups track by navGroup.name" ng-class="navClass(navGroup)">
+				                    <a href="{{ navGroup.href }}">{{ navGroup.name }}</a>
+				                    <ul class="uk-nav-sub">
+				                        <li ng-repeat="navItem in navGroup.navItems" ng-class="navClass(navItem)">
+				                            <ul>
+				                            	<li ng-if="navItem.extra.href" ng-class="navClass(navItem.extra)">
+				                            		<a href="{{navItem.extra.href}}">{{navItem.extra.text}}<i ng-if="navItem.extra.icon" class="icon-{{navItem.extra.icon}}"></i>
+					                        		</a>
+				                            	</li>
+				                                <li ng-class="linkClass(navItem)">
+				                                	<a href="{{navItem.href}}">{{navItem.name}}</a>
+				                                </li>
+				                            </ul>
+				                        </li>
+				                    </ul>
+				                </li>
+				            </ul>
+		                </div>
+		                <div class="uk-width-3-4">
+		                	<div class="panel panel-default">
+					            <div class="panel-body">
+					                <div ng-include="documentCtrl.file">
+					                  
+					                </div>
+					            </div>
+					        </div>
+		                </div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
       <footer class="row">
-        <small class="text-center">
+        <small class="uk-text-center">
         {% marked %} 
         Generated by [suh-dgeni-ngdocs](https://github.com/suhdev/suh-dgeni-ngdocs) - Suhail Abood &copy; 2015
         {% endmarked %}
         </small>
       </footer>
-  </div>
+	</div>
 </body>
 </html>

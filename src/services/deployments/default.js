@@ -56,6 +56,7 @@ module.exports = function(conf){
     files = {
       scripts: [
         'js/jquery.min.js',
+        'js/uikit.min.js',
         'js/lodash.min.js',
         'js/angular.min.js',
         'js/angular-animate.min.js',
@@ -66,7 +67,7 @@ module.exports = function(conf){
         'js/angular-resource.min.js',
         'js/marked.min.js',
         'js/prettify.min.min.js',
-        'js/bootstrap.min.js',
+        // 'js/bootstrap.min.js',
         'js/lunr.min.js',
         // 'js/versions-data.js',
         'js/pages-data.js',
@@ -77,13 +78,14 @@ module.exports = function(conf){
       ],
       stylesheets: [
         // 'css/bootstrap.min.css',
+        'css/uikit.min.css',
         'css/animate.min.css',
         'css/prettify-theme.css',
-        'css/ukit-gradient.css',
-        'css/doc_widgets.css',
+        'css/uikit.gradient.min.css',
+        // 'css/doc_widgets.css',
         'css/font-awesome.min.css',
         'css/open-sans.min.css',
-        'css/docs.css'
+        // 'css/docs.css'
       ]
     };
     var opts = _.extend({},def,conf.defaultDeployment);

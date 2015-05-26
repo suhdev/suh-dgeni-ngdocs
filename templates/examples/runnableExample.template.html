@@ -1,0 +1,47 @@
+{# Be aware that we need these extra new lines here or marked will not realise that the <div>
+   is HTML and wrap each line in a <p> - thus breaking the HTML #}
+
+
+<div class="runnable-examplex"
+    path="{$ doc.example.deployments.default.path $}"
+    {%- for attrName, attrValue in doc.example.attributes %}
+    {$ attrName $}="{$ attrValue $}"{% endfor %}>
+    
+<!-- This is the container of the content items -->
+  <ul class="uk-tab" data-uk-tab data-uk-switcher="{connect:'#example-id'}">
+    {% for fileName, file in doc.example.files %}
+      <li {% for attrName, attrValue in file.attributes %}
+      {$ attrName $}="{$ attrValue $}"{% endfor %}><a href="">{$ file.name $}</a></li>
+    {% endfor %}
+  </ul>
+  <ul id="example-id" class="uk-switcher example-files">
+  {% for fileName, file in doc.example.files %}
+      <li {% for attrName, attrValue in file.attributes %}
+      {$ attrName $}="{$ attrValue $}"{% endfor %}>
+        {% code -%}
+        {$ file.fileContents $}
+        {%- endcode %}
+      </li>
+  {% endfor %}
+  </ul>
+  <div class="runnable-example-filex" {% for attrName, attrValue in file.attributes %}
+    {$ attrName $}="{$ attrValue $}"{% endfor %}>
+
+    
+  </div>
+
+  <iframe class="runnable-example-frame google" src="{$ doc.example.deployments.default.outputPath $}" name="{$ doc.example.id $}"></iframe>
+</div>
+<script>
+$(document).ready(function(){
+  var s = $('[data-uk-switcher]');
+  UIkit.switcher(s,UIkit.Utils.options(s.attr('data-uk-switcher')));
+  s = $('.uk-tab');
+  UIkit.tab(s);
+});
+</script>
+
+
+
+{# Be aware that we need these extra new lines here or marked will not realise that the <div>
+   above is HTML and wrap each line in a <p> - thus breaking the HTML #}
