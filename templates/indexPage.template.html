@@ -129,6 +129,11 @@ pre *,code *{
 	color:inherit;
 }
 
+
+.item-section{
+	text-transform:uppercase;
+}
+
 </style>
 </head>
 <body>
@@ -204,7 +209,7 @@ pre *,code *{
 				                            		<a href="{{navItem.extra.href}}">{{navItem.extra.text}}<i ng-if="navItem.extra.icon" class="icon-{{navItem.extra.icon}}"></i>
 					                        		</a>
 				                            	</li>
-				                                <li ng-class="linkClass(navItem)">
+				                                <li ng-class="linkClass(navItem)" ng-class="{'uk-text-bold uk-text-primary section-item':navItem.type === 'section'}">
 				                                	<a href="{{navItem.href}}">{{navItem.name}}</a>
 				                                </li>
 				                            </ul>
