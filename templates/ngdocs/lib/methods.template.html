@@ -3,6 +3,7 @@
 <ul class="methods uk-list">
   {%- for method in doc.methods %}
   <li id="{$ method.name $}">
+    <hr class="uk-grid-divider">
     <h3 class="uk-text-primary">{$ functionSyntax(method) $}</h3>
     <div>{$ method.description | marked $}</div>
 

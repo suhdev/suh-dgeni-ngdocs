@@ -5,20 +5,17 @@
   <li id="{$ event.name $}">
     <h3>{$ event.name $}</h3>
     <div>{$ event.description | marked $}</div>
-    {%- if event.eventType == 'listen' %}
-    <div class="inline">
-      <h4>Listen on: {$ event.eventTarget $}</h4>
-    </div>
-    {%- else %}
-    <div class="inline">
-      <h4>Type:</h4>
-      <div class="type">{$ event.eventType $}</div>
-    </div>
-    <div class="inline">
-      <h4>Target:</h4>
-      <div class="target">{$ event.eventTarget $}</div>
-    </div>
-    {% endif -%}
+    <dl class="uk-description-list-horizontal">
+        {%- if event.eventType == 'listen' %}
+        <dt>Listen on</dt>
+        <dd>{$ event.eventTarget $}</dd>
+        {%- else %}
+        <dt>Type:</dt>
+        <dd>{$ event.eventType $}</dd>
+        <dt>Target:</dt>
+        <dd>{$ event.eventTarget $}</dd>
+        {% endif -%}
+    </dl>
   </li>
   {% endfor -%}
 </ul>

@@ -1,0 +1,14 @@
+<div class="ngdocs-object-todos">
+{% if doc.todos %}
+<h2>Todos</h2>
+<ul class="uk-list uk-list-line">
+{% set dex = 0 %}	
+{% for grouper,list in doc.todos | groupby('type') %}
+	{% for todo in list %}
+	{% set dex = dex + 1%}
+<li><span class="uk-badge uk-badge-{$ todo.type $}">{$ dex $}</span> {$ todo.value $}</li>
+	{% endfor %}
+{% endfor %}
+{% endif %}
+</ul>
+</div>

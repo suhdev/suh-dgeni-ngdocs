@@ -46,70 +46,6 @@ module.exports = function(conf){
     var navGroupMappers = {
      
       api: function(areaPages, area) {
-       /* console.log(areaPages);
-        var navGroups = _(areaPages)
-        .filter('module') // We are not interested in docs that are not in a module
-
-        .groupBy('module')
-
-        .map(function(modulePages, moduleName) {
-          log.debug('moduleName: ' + moduleName);
-          var navItems = [];
-          var modulePage;
-
-          _(modulePages)
-
-            .groupBy('docType')
-
-            .tap(function(docTypes) {
-              log.debug(moduleName, _.keys(docTypes));
-              // Extract the module page from the collection
-              modulePage = docTypes.module[0];
-              delete docTypes.module;
-            })
-
-            .tap(function(docTypes) {
-              if ( docTypes.input ) {
-                docTypes.directive = docTypes.directive || [];
-                // Combine input docTypes into directive docTypes
-                docTypes.directive = docTypes.directive.concat(docTypes.input);
-                delete docTypes.input;
-              }
-            })
-
-            .forEach(function(sectionPages, sectionName) {
-
-              sectionPages = _.sortBy(sectionPages, 'name');
-
-              if ( sectionPages.length > 0 ) {
-                // Push a navItem for this section
-                navItems.push({
-                  name: sectionName,
-                  type: 'section',
-                  href: path.dirname(sectionPages[0].path)
-                });
-
-                // Push the rest of the sectionPages for this section
-                _.forEach(sectionPages, function(sectionPage) {
-
-                  navItems.push({
-                    name: sectionPage.name,
-                    href: sectionPage.path,
-                    type: sectionPage.docType
-                  });
-
-                });
-              }
-            });
-          return {
-            name: moduleName,
-            href: modulePage.path,
-            type: 'group',
-            navItems: navItems
-          };
-        })
-        .value();
-      return navGroups;*/
         var navGroups = _(areaPages)
           .filter('module') // We are not interested in docs that are not in a module
 
@@ -127,7 +63,6 @@ module.exports = function(conf){
             xx = _.tap(xx,function(docTypes) {
                 // log.info(moduleName, _.keys(docTypes));
                 // Extract the module page from the collection
-                console.log(docTypes);
                 modulePage = docTypes.module[0];
                 delete docTypes.module;
               });

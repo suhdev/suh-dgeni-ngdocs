@@ -12,20 +12,8 @@
 {% endif %}
 </div>
 
-<div class="ngdocs-object-todos">
-{% if doc.todos %}
-<h2>Todos</h2>
-<ul class="uk-list uk-list-line">
-{% set dex = 0 %}	
-{% for grouper,list in doc.todos | groupby('type') %}
-	{% for todo in list %}
-	{% set dex = dex + 1%}
-<li><span class="uk-badge uk-badge-{$ todo.type $}">{$ dex $}</span> {$ todo.value $}</li>
-	{% endfor %}
-{% endfor %}
-{% endif %}
-</ul>
-</div>
+{% include "lib/todos.template.html" %}
+
 <a href='https://github.com/angular/angular.js/edit/{$ git.version.branch $}/{$ doc.fileInfo.projectRelativePath $}?message=docs({$ (doc.area != "api") and (doc.area + "%2F") or "" $}{$ doc.name $})%3A%20describe%20your%20change...{$ (doc.area == "api") and ("#L" + doc.startingLine) or "" $}' class='improve-docs uk-badge-primary uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 <a href='https://github.com/{$ git.info.owner $}/{$ git.info.repo $}/tree/{$ git.version.isSnapshot and 'master' or git.version.raw $}/{$ doc.fileInfo.projectRelativePath $}#L{$ doc.startingLine $}' class='view-source pull-right uk-badge uk-badge-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source

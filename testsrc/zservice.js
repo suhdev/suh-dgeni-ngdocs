@@ -2,6 +2,7 @@
  * @ngdoc service
  * @name Gulp
  * @module Test
+ * @requires Jake
  * @description 
  * this is a good service
  * @example
@@ -35,6 +36,17 @@
    * @methodOf Gulp
    * @module Test
    * @param {string} id the identifier of the method
+   * @todo {urget} fix this
+   * @description This is a good method
+   */
+
+   /**
+   * @ngdoc method
+   * @name Gulp#getMeOkay
+   * @methodOf Gulp
+   * @module Test
+   * @param {string} id the identifier of the method
+   * @todo {urget} fix this
    * @description This is a good method
    */
  }
@@ -72,3 +84,10 @@
   * A good description
   * @todo {important} good to go
   */
+
+/**
+ * @ngdoc service
+ * @name Jake
+ * @module Test
+ * @description just another test service
+ */

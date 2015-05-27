@@ -56,7 +56,7 @@ module.exports = function(conf){
   })
 
 
-  .config(function(parseTagsProcessor) {
+  .config(function(parseTagsProcessor,templateEngine,getInjectables) {
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/tutorial-step'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/sortOrder'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/lib'));
@@ -69,6 +69,10 @@ module.exports = function(conf){
         parseTagsProcessor.tagDefinitions.push(require(tag));
       });
     }
+
+    templateEngine.filters = templateEngine.filters.concat(getInjectables([
+      require('./src/filters/briefdescfilter')
+    ]));
   })
 
 
@@ -87,7 +91,7 @@ module.exports = function(conf){
     templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates/examples'));
     templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates/ngdocs'));
     templateFinder.templateFolders.unshift(path.resolve(packagePath, 'templates'));
-    console.log(templateFinder.templateFolders);
+    
     if (conf.templates){
       _(conf.templates)
         .forEach(function(template){

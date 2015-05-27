@@ -28,7 +28,7 @@ module.exports = function(conf){
 
         //     // Create a place to store references to the module's components
         //     doc.components = [];
-        //     console.log('Gooogle: '+doc.name);
+
 
         //     // Compute the package name and filename for the module
         //     var match = /^ng(.*)/.exec(doc.name);

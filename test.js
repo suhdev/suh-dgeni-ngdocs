@@ -9,7 +9,6 @@ var generator = require('./'),
 		.pipe(concat('app.min.js'))
 		.pipe(gulp.dest('./'));
 var k = fs.readFileSync('./README.md').toString();
-console.log(k);
 generator.generate({
 	defaultDeployment:{
 		name:'default',

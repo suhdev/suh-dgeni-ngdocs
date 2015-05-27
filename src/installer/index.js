@@ -53,7 +53,7 @@ Installer.prototype = {
 			.pipe(gulp.dest(this.config.jsFolder));
 		gulp.src(path.join(this.config.localFolder,'libCss/*.css'))
 			.pipe(gulp.dest(this.config.cssFolder));
-		console.log(this.config.userJs);
+
 		gulp.src(this.config.userJs)
 			.pipe(gulp.dest(this.config.jsFolder));
 		gulp.src(this.config.userFonts)
@@ -104,13 +104,10 @@ Installer.prototype = {
 		this.list((callback && callback.list)?callback.list:installed);
 	},
 	list:function(callback,f){
-		console.log(callback);
+
 		console.log('Retreiving details of bower packages.');
-		// var content = shelljs.exec('bower list --json '+__dirname);
-		// if (content.code === 0){
-		// 	this.onPackagesListed(JSON.parse(content.output));
-		// }
-		console.log('ZEEEETA: ',path.resolve(__dirname,'../..'));
+	
+
 		bower.commands.list(undefined,{
 			cwd:path.resolve(__dirname,'../..'),
 			paths:true,
@@ -121,12 +118,9 @@ Installer.prototype = {
 		var e,f,files,js,css,fonts,fff,p,dps = [], dpsKeys = ['jquery'];
 		e = (arguments.length == 2)?arguments[1]:arguments[0];
 		f = (arguments.length == 2)?arguments[0]:undefined;
-		// console.log(e);
+		
 		p = _(e.dependencies)
 			.transform(function(obj,n,key){
-				console.log(key.toUpperCase()+": ", JSON.stringify(n));
-				// console.log(n);
-
 				var item = {
 					path:n.canonicalDir,
 					main:!_.isArray(n.pkgMeta.main)?(path.join(n.canonicalDir,n.pkgMeta.main)):_(n.pkgMeta.main).map(function(elem) {
