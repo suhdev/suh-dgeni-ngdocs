@@ -75,6 +75,7 @@ generator.generate({
 		angular:'1.3.15',
 		jquery:'2.1.13',
 		name:'Suhail Abood',
+		appName:'Suhail Abood',
 		module:{
 			version:'v1.0.0',
 			file:'suhail.js',

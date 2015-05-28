@@ -202,8 +202,11 @@ module.exports = function(conf){
 
         htaccess += 'RewriteCond %{REQUEST_FILENAME} !-f \n';
         htaccess += 'RewriteRule ^('+kkeys.join('|')+')(/?.*) /'+path.basename(conf.outputFolder)+'/index.html'; 
-
+        if (!fs.existsSync(path.basename(conf.outputFolder))){
+          fs.mkdirSync(path.basename(conf.outputFolder));
+        }
         fs.writeFileSync(conf.outputFolder+'/.htaccess',htaccess);
+
 
         docs.push({
           docType: 'nav-data',

@@ -64,6 +64,7 @@ module.exports = function(conf){
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/note'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/todo'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/briefdesc'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/methodnote'));
     if (conf.tagDefinitions){
       _(conf.tagDefinitions).forEach(function(tag){
         parseTagsProcessor.tagDefinitions.push(require(tag));
@@ -104,7 +105,7 @@ module.exports = function(conf){
   })
 
 
-  .config(function(computePathsProcessor, computeIdsProcessor,templateFinder) {
+  .config(function(computePathsProcessor, computeIdsProcessor,templateFinder,getAliases) {
     
 
     computePathsProcessor.pathTemplates.push({
@@ -148,6 +149,7 @@ module.exports = function(conf){
       pathTemplate: '${area}/${name}',
       outputPathTemplate: 'partials/${area}/${name}.html'
     });
+
     computePathsProcessor.pathTemplates.push({
       docTypes: ['componentGroup' ],
       pathTemplate: '${area}/${moduleName}/${groupType}',
@@ -159,6 +161,17 @@ module.exports = function(conf){
       getId: function(doc) { return doc.fileInfo.baseName; },
       getAliases: function(doc) { return [doc.id]; }
     });
+
+    computeIdsProcessor.idTemplates.push({
+    docTypes: ['interface' ],
+    idTemplate: 'module:${module}.${docType}:${name}',
+    getAliases: getAliases
+  });
+     computePathsProcessor.pathTemplates.push({
+    docTypes: ['interface'],
+    pathTemplate: '${area}/${module}/${docType}/${name}',
+    outputPathTemplate: 'partials/${area}/${module}/${docType}/${name}.html'
+  });
 
     computeIdsProcessor.idTemplates.push({
       docTypes: ['error'],

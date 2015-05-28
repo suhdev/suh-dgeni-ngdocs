@@ -26,7 +26,7 @@
  * This is a test module used to check if the library is working fine. {@note primary <important> This is nice.} 
  * @description 
  * This is just a test module {@note primary <important> This is nice.} 
- * @todo {urgent} This is a nice place
+ * @todo {urgent} {note} This is a nice place
  * @todo This is not good
  * @todo {urgent} This is a nice place
  */

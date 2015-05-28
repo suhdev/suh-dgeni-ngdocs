@@ -8,7 +8,7 @@
         content="{$ doc.meta.description $}">
   <meta name="fragment" content="!">
  <link href='http://fonts.googleapis.com/css?family=Exo:200,300,400,500,700,900|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-  <title ng-bind-template="{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}: {{ currentArea.name }}: {{ currentPage.name || 'Error: Page not found'}}">{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}</title>
+  <title ng-bind-template="{$ doc.payload.appName if (doc.payload.appName) else 'Suh-Dgeni' $}: {{ currentArea.name }}: {{ currentPage.name || 'Error: Page not found'}}">{$ doc.appName if (doc.appName) else 'Suh-Dgeni' $}</title>
 
   <script type="text/javascript">
     // dynamically add base tag as well as css and javascript files.

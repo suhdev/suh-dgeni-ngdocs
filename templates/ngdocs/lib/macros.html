@@ -32,6 +32,21 @@
 </table>
 {% endmacro -%}
 
+{%- macro todosList(title,todos)  %}
+<div class="ngdocs-object-todos">
+<h2>{$ title $}</h2>
+<ul class="uk-list uk-list-line">
+{% set dex = 0 %} 
+{% for grouper,list in todos | groupby('type') %}
+  {% for todo in list %}
+  {% set dex = dex + 1%}
+<li><span class="uk-badge uk-badge-{$ todo.type $}">{$ dex $}</span> {$ todo.value $}</li>
+  {% endfor %}
+{% endfor %}
+</ul>
+</div>
+
+{% endmacro -%}
 
 {%- macro directiveParam(name, type, join, sep) %}
   {%- if type.optional %}[{% endif -%}

@@ -247,6 +247,68 @@ gulp.task('ngdocs',['concat-js'], function(){
 
 ```
 
+## Custom tags
+1. @todo 
+	The tag now supports a type it can be used in the following syntax:
+
+	```javascript
+	/** 
+	 * @ngdoc module
+	 * @name BlahBlah
+	 * @module BlahBlah
+	 * @todo {urgent} this is urgent 
+	 * @todo {warn} this is not urgent 
+	 * @todo {urgent} this is also urgent
+	 * @todo {urgent|next|warn|important|primary|success|danger} {label} todo text
+	 * @description
+	 * this is just a description
+	 */
+
+	```
+
+	Also, note that the todo will be grouped by their type and then presented. 
+
+	If no type is provided it will default to a `primary` i.e. 
+
+	@todo todo text 
+
+2. @note 
+	The tag now supports a type as in the following syntax:
+
+	```javascript
+	/** 
+	 * @ngdoc module
+	 * @name BlahBlah
+	 * @module BlahBlah
+	 * @note {urgent} this is urgent 
+	 * @note {warn} this is not urgent 
+	 * @note {urgent} this is also urgent
+	 * @note {urgent|next|warn|important|primary|success|danger} todo text
+	 * @description
+	 * this is just a description
+	 */
+
+	```
+
+3. @briefdesc
+	This tag allows for adding a special description to show up on summary pages 
+	rather than using the first paragraph of the description tag. 
+
+	```javascript
+	/** 
+	 * @ngdoc module
+	 * @name BlahBlah
+	 * @module BlahBlah
+	 * @todo {urgent} this is urgent 
+	 * @todo {warn} this is not urgent 
+	 * @todo {urgent} this is also urgent
+	 * @todo {urgent|next|warn|important|primary|success|danger} todo text
+	 * @description
+	 * this is just a description
+	 */
+
+	```
+
 ## Attribution 
 
 This package is basically an extension to the ```dgeni-packages``` module (built on top of it),in which I replaced the templates with customized ones,

@@ -11,9 +11,10 @@
 {% endfor %}
 {% endif %}
 </div>
-
-{% include "lib/todos.template.html" %}
-
+{% import "./lib/macros.html" as macros %}
+{% if doc.todos %}
+{$ macros.todosList('Todos', doc.todos) $}
+{% endif %}
 <a href='https://github.com/angular/angular.js/edit/{$ git.version.branch $}/{$ doc.fileInfo.projectRelativePath $}?message=docs({$ (doc.area != "api") and (doc.area + "%2F") or "" $}{$ doc.name $})%3A%20describe%20your%20change...{$ (doc.area == "api") and ("#L" + doc.startingLine) or "" $}' class='improve-docs uk-badge-primary uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
 <a href='https://github.com/{$ git.info.owner $}/{$ git.info.repo $}/tree/{$ git.version.isSnapshot and 'master' or git.version.raw $}/{$ doc.fileInfo.projectRelativePath $}#L{$ doc.startingLine $}' class='view-source pull-right uk-badge uk-badge-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source

@@ -6,6 +6,13 @@
     <hr class="uk-grid-divider">
     <h3 class="uk-text-primary">{$ functionSyntax(method) $}</h3>
     <div>{$ method.description | marked $}</div>
+    
+    {% if method.todos %}
+    {$ todosList('Todos',method.todos) $}
+    {% endif %}
+    {% if method.notes %}
+    {$ todosList('Notes',method.notes) $}
+    {% endif %}
 
     {% if method.params %}
     <h4>Parameters</h4>
@@ -21,6 +28,8 @@
     <h4>Returns</h4>
     {$ typeInfo(method.returns) $}
     {% endif %}
+
+
 
   </li>
   {% endfor -%}
