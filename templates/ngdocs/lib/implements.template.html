@@ -1,0 +1,10 @@
+<div class="ngdocs-object-todos">
+{% if doc.interfaces %}
+<h2>Implemented interfacees</h2>
+<ul class="uk-list uk-list-line">
+{% for intf in doc.interfaces %}
+	<li>{$ intf | link $}</li>
+{% endfor %}
+{% endif %}
+</ul>
+</div>

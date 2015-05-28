@@ -64,7 +64,7 @@ module.exports = function(conf){
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/note'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/todo'));
     parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/briefdesc'));
-    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/methodnote'));
+    parseTagsProcessor.tagDefinitions.push(require('./src/tag-defs/implements'));
     if (conf.tagDefinitions){
       _(conf.tagDefinitions).forEach(function(tag){
         parseTagsProcessor.tagDefinitions.push(require(tag));
