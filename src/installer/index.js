@@ -32,7 +32,9 @@ var Installer = function(conf){
 		userJs:conf.defaultDeployment?(conf.defaultDeployment.scripts ||[]):[],
 		userFonts:conf.defaultDeployment?(conf.defaultDeployment.fonts ||[]):[],
 		userCss:conf.defaultDeployment?(conf.defaultDeployment.stylesheets ||[]):[],
-		userMisc:conf.defaultDeployment?(conf.defaultDeployment.misc ||[]):[]
+		userMisc:conf.defaultDeployment?(conf.defaultDeployment.misc ||[]):[],
+		userIncludeJs:conf.includeJs?(conf.includeJs||[]):[],
+		userIncludeCss:conf.includeCss?(conf.includeCss||[]):[]
 	};
 	this.config.packages = (conf && conf.packages)? [].concat(conf.packages,c):c;
 };
@@ -56,6 +58,10 @@ Installer.prototype = {
 
 		gulp.src(this.config.userJs)
 			.pipe(gulp.dest(this.config.jsFolder));
+		gulp.src(this.config.userIncludeJs)
+			.pipe(gulp.dest(this.config.jsFolder));
+			gulp.src(this.config.userIncludeCss)
+			.pipe(gulp.dest(this.config.cssFolder));
 		gulp.src(this.config.userFonts)
 			.pipe(gulp.dest(this.config.fontsFolder));
 		gulp.src([path.join(this.config.localFolder,'js/crafty/*.js'),
