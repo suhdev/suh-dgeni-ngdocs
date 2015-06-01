@@ -48,7 +48,8 @@ module.exports = function(conf){
       },
       examples: {
         commonFiles: {
-          scripts: [ '../../js/angular.min.js' ]
+          scripts: [ '../../js/angular.min.js' ],
+          stylesheets: []
         },
         dependencyPath: '../../js/'
       },
@@ -99,6 +100,11 @@ module.exports = function(conf){
         files.stylesheets.push('css/'+path.basename(e));
       })
       .commit();
+    var commonExampleScripts = (conf.defaultDeployment && conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles && conf.defaultDeployment.examples.commonFiles.scripts) || []; 
+    var commonExampleStylesheets = (conf.defaultDeployment && conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles && conf.defaultDeployment.examples.commonFiles.stylesheets) || []; 
+    opts.examples.commonFiles.scripts.concat(commonExampleScripts);
+    opts.examples.commonFiles.stylesheets.concat(commonExampleStylesheets);
+    if (conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles)
     // files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
     // files.stylesheets = [].concat(files.stylesheets,conf.defaultDeployment.stylesheets?conf.defaultDeployment.stylesheets:[]);
     opts.scripts = files.scripts;

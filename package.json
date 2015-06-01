@@ -1,6 +1,6 @@
 {
   "name": "suh-dgeni-ngdocs",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "description": "A package to generate ng-docs similar to what is used on AngularJS website.",
   "main": "index.js",
   "scripts": {
