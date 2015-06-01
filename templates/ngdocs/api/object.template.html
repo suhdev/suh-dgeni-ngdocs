@@ -1,4 +1,4 @@
-{% include "../lib/macros.html" %}
+{% include "lib/macros.html" %}
 {% extends "api/api.template.html" %}
 
 {% block additional %}  
@@ -20,7 +20,12 @@
   {% include "lib/methods.template.html" %}
   {% include "lib/events.template.html" %}
   {% include "lib/properties.template.html" %}
-  {% include "lib/todos.template.html" %}
+  {% if doc.todos %}
+    {$ todosList('Todos',doc.todos) $}
+  {% endif %}
+  {% if doc.notes %}
+    {$ todosList('Notes',doc.notes) $}
+  {% endif %}
 
   
 {% endblock %}

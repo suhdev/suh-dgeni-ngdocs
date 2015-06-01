@@ -96,7 +96,7 @@ module.exports = function(conf){
       .commit();
     _(conf.defaultDeployment.stylesheets)
       .forEach(function(e){
-        files.css.push('css/'+path.basename(e));
+        files.stylesheets.push('css/'+path.basename(e));
       })
       .commit();
     // files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
