@@ -45,14 +45,7 @@ module.exports = function(conf){
             }
           ]
         }
-      },
-      examples: {
-        commonFiles: {
-          scripts: [ '../../js/angular.min.js' ],
-          stylesheets: []
-        },
-        dependencyPath: '../../js/'
-      },
+      }
     },
     files = {
       scripts: [
@@ -90,6 +83,12 @@ module.exports = function(conf){
       ]
     };
     var opts = _.extend({},def,conf.defaultDeployment);
+    opts.examples = opts.examples || {};
+    opts.examples.commonFiles = opts.examples.commonFiles || {};
+    opts.examples.commonFiles.scripts = opts.examples.commonFiles.scripts || []; 
+    opts.examples.commonFiles.scripts.unshift('../../js/angular.min.js');
+    opts.examples.commonFiles.stylesheets = opts.examples.commonFiles.stylesheets || []; 
+    opts.examples.dependencyPath = opts.examples.dependencyPath || '../../js/'; 
     _(conf.defaultDeployment.scripts)
       .forEach(function(e){
         files.scripts.push('js/'+path.basename(e));
@@ -100,10 +99,6 @@ module.exports = function(conf){
         files.stylesheets.push('css/'+path.basename(e));
       })
       .commit();
-    var commonExampleScripts = (conf.defaultDeployment && conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles && conf.defaultDeployment.examples.commonFiles.scripts) || []; 
-    var commonExampleStylesheets = (conf.defaultDeployment && conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles && conf.defaultDeployment.examples.commonFiles.stylesheets) || []; 
-    opts.examples.commonFiles.scripts.concat(commonExampleScripts);
-    opts.examples.commonFiles.stylesheets.concat(commonExampleStylesheets);
     if (conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles)
     // files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
     // files.stylesheets = [].concat(files.stylesheets,conf.defaultDeployment.stylesheets?conf.defaultDeployment.stylesheets:[]);
