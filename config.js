@@ -173,6 +173,17 @@ module.exports = function(conf){
     outputPathTemplate: 'partials/${area}/${module}/${docType}/${name}.html'
   });
 
+     computeIdsProcessor.idTemplates.push({
+    docTypes: ['controller' ],
+    idTemplate: 'module:${module}.${docType}:${name}',
+    getAliases: getAliases
+  });
+     computePathsProcessor.pathTemplates.push({
+    docTypes: ['controller'],
+    pathTemplate: '${area}/${module}/${docType}/${name}',
+    outputPathTemplate: 'partials/${area}/${module}/${docType}/${name}.html'
+  });
+
     computeIdsProcessor.idTemplates.push({
       docTypes: ['error'],
       getId: function(doc) { return 'error:' + doc.namespace + ':' + doc.name; },
