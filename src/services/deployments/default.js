@@ -99,7 +99,7 @@ module.exports = function(conf){
         files.stylesheets.push('css/'+path.basename(e));
       })
       .commit();
-    if (conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles)
+    // if (conf.defaultDeployment.examples && conf.defaultDeployment.examples.commonFiles)
     // files.scripts = [].concat(files.scripts,conf.defaultDeployment.scripts?conf.defaultDeployment.scripts:[]);
     // files.stylesheets = [].concat(files.stylesheets,conf.defaultDeployment.stylesheets?conf.defaultDeployment.stylesheets:[]);
     opts.scripts = files.scripts;
